@@ -4,11 +4,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'db/entities';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private readonly jwtService: JwtService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -25,7 +27,8 @@ export class UserService {
       email: createUserDto.email,
       password: hash,
     });
-    return user;
+    const token = this.jwtService.sign({ email: createUserDto.email });
+    return { user, token };
   }
 
   async findOne(email: string) {
