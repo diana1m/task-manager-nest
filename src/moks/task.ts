@@ -36,7 +36,7 @@ export const tasks = [
   },
   {
     _id: '65e03512540d23065222a5de',
-    text: 'visit dantist',
+    text: 'visit dentist',
     category: 1,
   },
   {

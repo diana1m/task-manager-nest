@@ -2,16 +2,18 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+
 import { Task } from './task.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: 'string';
+  id: number;
 
   @Column()
   email: string;
@@ -20,6 +22,7 @@ export class User {
   password: string;
 
   @OneToMany(() => Task, (task) => task.user, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'tasks' })
   tasks: Task[];
 
   @CreateDateColumn()
